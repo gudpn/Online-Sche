@@ -1,0 +1,13 @@
+﻿extends layout
+
+
+block extraHeader
+	script(src='../lib/moment.min.js')
+	script(src='../lib/jquery.min.js')
+	script(src='../lib/fullcalendar.min.js')
+	script(src='../js/calendar.js')
+
+block content
+	h1= title
+	#calendar
+	
