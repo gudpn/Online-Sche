@@ -1,1 +1,5 @@
 ﻿http://michaelcrump.net/setting-up-github-to-work-with-visual-studio-2013-step-by-step/
+
+
+
+https://scotch.io/tutorials/creating-a-single-page-todo-app-with-node-and-angular

@@ -1,5 +1,10 @@
-﻿    $(document).ready(function () {
-        
+﻿
+
+
+
+$(document).ready(function () {
+   
+
         $('#calendar').fullCalendar({
             header: {
                 left: 'prev,next today',
@@ -9,7 +14,9 @@
             defaultDate: '2016-06-12',
             editable: true,
             eventLimit: true, // allow "more" link when too many events
-            events: [
+         
+        
+        events: [
                 {
                     title: 'All Day Event',
                     start: '2016-06-01'

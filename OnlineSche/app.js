@@ -4,11 +4,17 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var mongoose = require('mongoose');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+
+var event = mongoose.model('event', {
+    text : String
+});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,14 +30,67 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+
+
 app.use('/users', users);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+//app.use(function (req, res, next) {
+//    var err = new Error('Not Found');
+//    err.status = 404;
+//    next(err);
+//});
+
+app.get('*', function (req, res) { //url : /events : get all events
+  res.sendfile('.public/index.html')  
 });
+
+
+app.get('/', function (req, res) { //url : /events : get all events
+    event.find(function (err, events) {
+        if (err)
+            res.send(err)
+        res.json(events);
+    });
+
+});
+
+app.post('/', function (req, res) { //url : /events : create a event
+    event.create({
+        text: req.body.text,
+        done: false
+    }        
+        , function (err, events) {
+                if (err)
+            res.send(err)
+        /// 
+        event.find(function (err, events) {
+            if (err)
+                res.send(err)
+            res.json(events);
+        
+        });
+    });
+
+});
+
+app.delete('/:event_id', function (req, res) {
+    event.remove({
+        _id: req.params.event_id
+    }, function (err, event) {
+        if (err)
+            res.send(err);
+        
+        event.find(function (err, events) {
+            if (err)
+                res.send(err)
+            res.json(events);
+        
+        });
+    });
+
+});
+
 
 // error handlers
 
